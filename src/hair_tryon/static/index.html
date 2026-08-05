@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="仅供内部团队在 localhost 使用的男士发型三视图生成验证原型。"
+    />
+    <title>发型三视图测试 · 内部原型</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script type="module" src="/static/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" href="#workbench-title" aria-label="发型三视图测试首页">
+          <span class="brand__mark" aria-hidden="true">HT</span>
+          <span>
+            <small>Internal prototype</small>
+            <strong>发型试戴工作台</strong>
+          </span>
+        </a>
+
+        <div class="toolbar" aria-label="运行设置">
+          <label class="toolbar-field" for="participant-id">
+            <span>参与者</span>
+            <select id="participant-id" autocomplete="off">
+              <option value="">选择 T01–T05</option>
+              <option value="T01">T01</option>
+              <option value="T02">T02</option>
+              <option value="T03">T03</option>
+              <option value="T04">T04</option>
+              <option value="T05">T05</option>
+            </select>
+          </label>
+
+          <div class="consent-cluster">
+            <label class="consent-toggle" for="explicit-consent">
+              <input id="explicit-consent" type="checkbox" />
+              <span>明确同意</span>
+            </label>
+            <details class="notice-details">
+              <summary>数据说明</summary>
+              <p>
+                照片用于本次内部模型测试。产品只清理自己的临时副本；第三方供应商的数据保留、训练使用和删除政策尚未核实。勾选“明确同意”后才可开始运行，开始前不会上传图片。
+              </p>
+            </details>
+          </div>
+
+          <label class="toolbar-field toolbar-field--model" for="model-select">
+            <span>模型</span>
+            <select id="model-select">
+              <option value="gemini-3.1-flash-image-preview">Nano Banana 2 · 速度</option>
+              <option value="gemini-3-pro-image-preview">Nano Banana Pro · 细节</option>
+            </select>
+          </label>
+
+          <div class="runtime-badges" aria-label="当前运行环境">
+            <span class="runtime-badge" id="provider-badge">Provider：检查中</span>
+            <span class="runtime-badge" id="actual-model-badge">实际模型：尚未调用</span>
+          </div>
+
+          <button class="button button--secondary end-button" id="end-session" type="button" hidden>
+            <span class="button__label">结束运行</span>
+            <span class="button__spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="fake-banner" id="fake-banner" role="alert" hidden>
+        <strong>模拟结果，不是模型输出</strong>
+        <span>Fake provider 仅用于开发验证，不能进入正式评估报告。</span>
+      </div>
+    </header>
+
+    <main class="workbench" aria-labelledby="workbench-title">
+      <section class="workbench-heading">
+        <div>
+          <p class="eyebrow">One run · one participant · one model</p>
+          <h1 id="workbench-title">输入与生成结果并排查看</h1>
+        </div>
+        <div class="heading-status">
+          <span class="status-pill status-pill--neutral" id="session-status">未开始</span>
+          <p id="activity-message" aria-live="polite">
+            阅读数据说明，选择参与者与模型后开始运行。
+          </p>
+        </div>
+      </section>
+
+      <div class="stage-grid">
+        <section class="stage-panel" aria-labelledby="input-title">
+          <header class="stage-panel__header">
+            <div>
+              <p class="eyebrow">Camera & frozen input</p>
+              <h2 id="input-title">原始输入</h2>
+            </div>
+            <span class="status-pill status-pill--neutral" id="input-stage-status">等待开始</span>
+          </header>
+
+          <div class="stage-tabs" role="tablist" aria-label="原始输入角度">
+            <button
+              class="stage-tab"
+              id="input-tab-front"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="input-stage"
+              tabindex="0"
+              data-input-view="front"
+            >
+              <span>正面</span>
+              <small data-tab-state>待采集</small>
+            </button>
+            <button
+              class="stage-tab"
+              id="input-tab-side"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="input-stage"
+              tabindex="-1"
+              data-input-view="subject_right_profile"
+            >
+              <span>右侧面</span>
+              <small data-tab-state>待采集</small>
+            </button>
+          </div>
+
+          <div
+            class="media-stage media-stage--input"
+            id="input-stage"
+            role="tabpanel"
+            aria-labelledby="input-tab-front"
+            tabindex="0"
+          >
+            <video id="camera-preview" autoplay muted playsinline hidden></video>
+            <img id="capture-image" alt="当前角度冻结的原始照片" hidden />
+            <div class="stage-empty" id="camera-empty">
+              <span class="camera-icon" aria-hidden="true"></span>
+              <strong>摄像头尚未开启</strong>
+              <p>画面只在本机浏览器中预览；明确同意后才能上传。</p>
+            </div>
+            <div class="camera-guide" id="camera-guide" aria-hidden="true"></div>
+            <div class="stage-notice" id="back-input-note" hidden>
+              本次未采集背面 · 左侧保留最近查看的真实输入
+            </div>
+            <div class="stage-caption">
+              <div>
+                <strong id="input-stage-caption">正视镜头，完整露出头部和面部轮廓。</strong>
+                <p class="stage-error" id="capture-error" role="alert" hidden></p>
+              </div>
+              <button class="button button--on-dark" id="recapture-input" type="button" hidden>
+                重新采集此角度
+              </button>
+            </div>
+          </div>
+          <canvas id="capture-canvas" hidden></canvas>
+        </section>
+
+        <section class="stage-panel" aria-labelledby="result-title">
+          <header class="stage-panel__header">
+            <div>
+              <p class="eyebrow">Generated output</p>
+              <h2 id="result-title">发型结果</h2>
+            </div>
+            <span class="status-pill status-pill--neutral" id="generation-status">等待输入</span>
+          </header>
+
+          <div class="stage-tabs" role="tablist" aria-label="生成结果角度">
+            <button
+              class="stage-tab"
+              id="result-tab-front"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="result-stage"
+              tabindex="0"
+              data-result-view="front"
+            >
+              <span>正面</span>
+              <small data-tab-state>等待</small>
+            </button>
+            <button
+              class="stage-tab"
+              id="result-tab-side"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="result-stage"
+              tabindex="-1"
+              data-result-view="subject_right_profile"
+            >
+              <span>右侧面</span>
+              <small data-tab-state>等待</small>
+            </button>
+            <button
+              class="stage-tab"
+              id="result-tab-back"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="result-stage"
+              tabindex="-1"
+              data-result-view="back"
+            >
+              <span>背面</span>
+              <small data-tab-state>AI 推测 · 等待</small>
+            </button>
+          </div>
+
+          <div
+            class="media-stage media-stage--result"
+            id="result-stage"
+            role="tabpanel"
+            aria-labelledby="result-tab-front"
+            tabindex="0"
+          >
+            <img id="result-image" alt="当前角度生成的发型效果" hidden />
+            <div class="stage-empty result-placeholder" id="result-placeholder">
+              <span class="result-placeholder__index" aria-hidden="true">01</span>
+              <strong>等待生成</strong>
+              <p>完成两张采集并选择一款发型。</p>
+            </div>
+            <div class="inference-badge" id="result-inference" hidden>
+              AI 推测，仅供内部验证
+            </div>
+            <div class="stage-caption stage-caption--result">
+              <div>
+                <strong id="result-stage-status">尚未调用</strong>
+                <p id="result-meta">当前视图 0/2 次</p>
+                <p class="stage-error" id="result-error" role="alert" hidden></p>
+              </div>
+              <button class="button button--on-dark" id="retry-view" type="button" hidden>
+                <span class="button__label">重试此视图</span>
+                <span class="button__spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="style-tray" aria-labelledby="style-title">
+        <div class="style-tray__header">
+          <div>
+            <p class="eyebrow">Fixed hairstyle catalog</p>
+            <h2 id="style-title">选择一款发型</h2>
+          </div>
+          <p class="lock-note" id="model-lock-note" role="status" hidden></p>
+        </div>
+
+        <fieldset class="style-fieldset">
+          <legend class="visually-hidden">目标发型</legend>
+          <div class="hairstyle-strip" id="hairstyle-strip"></div>
+        </fieldset>
+
+        <div class="primary-row">
+          <div class="run-summary" aria-label="本次运行摘要">
+            <span id="summary-participant">参与者 —</span>
+            <span id="summary-hairstyle">发型 —</span>
+            <span id="summary-model">Nano Banana 2</span>
+          </div>
+          <button class="button button--primary primary-action" id="primary-action" type="button" disabled>
+            <span class="button__label">开始运行</span>
+            <span class="button__spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

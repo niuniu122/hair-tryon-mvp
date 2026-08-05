@@ -1,0 +1,25 @@
+# 按日期
+
+## 2026-08-04
+
+- 18:31:03 | CHANGE-20260804-006 | completed | 实现、评审与完成状态同步 | [文档](../changes/2026/08/CHANGE-20260804-006.md)
+- 18:31:03 | ROUTING-20260804-003 | completed | 实施与审查路由完成 | [文档](../../reviews/engineering/ROUTING-20260804-003.md)
+- 18:31:03 | TASK-20260804-002 | completed | 双预览前端重组完成 | [文档](../handoffs/TASK-20260804-002.md)
+- 18:31:03 | PROGRESS-001 | completed | v1.5.0 本地开发完成 | [文档](../../progress.md)
+- 18:31:03 | IMPL-PLAN-001 | completed | 前端 TDD 与验证完成 | [文档](../../implementation-plan.md)
+- 18:31:03 | PRD-HAIR-IMAGE-001 | approved | PRD v1.5.0 已实现 | [文档](../../product.md)
+- 18:21:00 | REVIEW-20260804-002 | completed | 代码审查无 blocker | [文档](../../reviews/engineering/REVIEW-20260804-002.md)
+- 18:21:00 | QA-20260804-002 | completed | 双舞台 QA finding 已关闭 | [文档](../../reviews/qa/QA-20260804-002.md)
+- 18:21:00 | DEV-20260804-008 | completed | QA 与评审修复 | [文档](../development/2026/08/DEV-20260804-008.md)
+- 18:21:00 | DEV-20260804-007 | completed | 双预览主实现 | [文档](../development/2026/08/DEV-20260804-007.md)
+- 17:35:29 | DESIGN-001 | active | 双媒体舞台设计 | [文档](../../design.md)
+- 17:26:28 | CONSULTATION-20260804-003 | completed | 产品与前端可行性复核 | [文档](../../reviews/product/CONSULTATION-20260804-003.md)
+- 17:35:29 | CHANGE-20260804-005 | completed | 文档与授权状态修订 | [文档](../changes/2026/08/CHANGE-20260804-005.md)
+- 16:38:35 | TASK-20260804-001 | completed | 本地交付就绪 | [文档](../handoffs/TASK-20260804-001.md)
+- 16:32:53 | REVIEW-20260804-001 | completed | 工程复核 | [文档](../../reviews/engineering/REVIEW-20260804-001.md)
+- 16:32:53 | DEV-20260804-006 | completed | 真实调用与修复 | [文档](../development/2026/08/DEV-20260804-006.md)
+- 16:32:53 | CHANGE-20260804-004 | completed | 文档同步 | [文档](../changes/2026/08/CHANGE-20260804-004.md)
+- 16:30:00 | SECURITY-20260804-001 | completed | 安全复核 | [文档](../../reviews/security/SECURITY-20260804-001.md)
+- 16:20:08 | QA-20260804-001 | completed | 浏览器与真实模型 QA | [文档](../../reviews/qa/QA-20260804-001.md)
+- 16:10:00 | DEV-20260804-005 | completed | v1.4.1 实现 | [文档](../development/2026/08/DEV-20260804-005.md)
+- 15:29:36 | ROUTING-20260804-002 | completed | 专家路由 | [文档](../../reviews/engineering/ROUTING-20260804-002.md)
