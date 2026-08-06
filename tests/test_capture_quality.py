@@ -1,5 +1,9 @@
 import io
+import shutil
+from pathlib import Path
 
+import cv2
+import numpy as np
 import pytest
 from PIL import Image, ImageDraw
 
@@ -9,6 +13,7 @@ from hair_tryon.capture_quality import (
     CaptureValidationError,
     CaptureValidator,
     FaceObservation,
+    OpenCvHaarFaceDetector,
     sanitize_image,
 )
 
@@ -50,6 +55,138 @@ def test_default_capture_validator_can_construct_the_runtime_face_detector() -> 
     check = CaptureValidator()
 
     assert check is not None
+
+
+def test_runtime_face_detector_loads_cascades_from_a_unicode_path(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    original_root = Path(cv2.data.haarcascades)
+    unicode_root = tmp_path / "AI美业"
+    unicode_root.mkdir()
+    for filename in (
+        "haarcascade_frontalface_default.xml",
+        "haarcascade_profileface.xml",
+    ):
+        shutil.copyfile(original_root / filename, unicode_root / filename)
+    monkeypatch.setattr(cv2.data, "haarcascades", f"{unicode_root}/")
+
+    detector = OpenCvHaarFaceDetector()
+
+    assert detector.detect(np.zeros((640, 640, 3), dtype=np.uint8)) == []
+
+
+def test_runtime_face_detector_fails_during_initialization_when_cascade_is_missing(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(cv2.data, "haarcascades", f"{tmp_path}/")
+
+    with pytest.raises(RuntimeError, match="haarcascade_frontalface_default.xml"):
+        OpenCvHaarFaceDetector()
+
+
+def test_runtime_face_detector_fails_during_initialization_when_cascade_is_corrupt(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    (tmp_path / "haarcascade_frontalface_default.xml").write_text(
+        "<not-a-cascade />",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(cv2.data, "haarcascades", f"{tmp_path}/")
+
+    with pytest.raises(RuntimeError, match="haarcascade_frontalface_default.xml"):
+        OpenCvHaarFaceDetector()
+
+
+def test_runtime_face_detector_reports_a_missing_profile_cascade(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    original_root = Path(cv2.data.haarcascades)
+    shutil.copyfile(
+        original_root / "haarcascade_frontalface_default.xml",
+        tmp_path / "haarcascade_frontalface_default.xml",
+    )
+    monkeypatch.setattr(cv2.data, "haarcascades", f"{tmp_path}/")
+
+    with pytest.raises(RuntimeError, match="haarcascade_profileface.xml"):
+        OpenCvHaarFaceDetector()
+
+
+@pytest.mark.parametrize(
+    ("storage_open", "read_result", "classifier_empty"),
+    [
+        (False, True, False),
+        (True, False, False),
+        (True, True, True),
+    ],
+)
+def test_cascade_integrity_failures_release_storage_and_raise_a_stable_error(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    storage_open: bool,
+    read_result: bool,
+    classifier_empty: bool,
+) -> None:
+    cascade_path = tmp_path / "test-cascade.xml"
+    cascade_path.write_text("<opencv_storage />", encoding="utf-8")
+
+    class StubStorage:
+        release_calls = 0
+
+        def isOpened(self) -> bool:
+            return storage_open
+
+        def getFirstTopLevelNode(self) -> object:
+            return object()
+
+        def release(self) -> None:
+            self.release_calls += 1
+
+    class StubClassifier:
+        def read(self, _node: object) -> bool:
+            return read_result
+
+        def empty(self) -> bool:
+            return classifier_empty
+
+    storage = StubStorage()
+    monkeypatch.setattr(cv2, "FileStorage", lambda *_args: storage)
+    monkeypatch.setattr(cv2, "CascadeClassifier", StubClassifier)
+
+    with pytest.raises(RuntimeError, match="test-cascade.xml"):
+        OpenCvHaarFaceDetector._load_cascade(cascade_path)
+
+    assert storage.release_calls == 1
+
+
+def test_cascade_cv2_errors_are_wrapped_and_release_storage(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    cascade_path = tmp_path / "test-cascade.xml"
+    cascade_path.write_text("<opencv_storage />", encoding="utf-8")
+
+    class StubStorage:
+        release_calls = 0
+
+        def release(self) -> None:
+            self.release_calls += 1
+
+    storage = StubStorage()
+    monkeypatch.setattr(cv2, "FileStorage", lambda *_args: storage)
+
+    def raise_cv2_error() -> None:
+        raise cv2.error("classifier construction failed")
+
+    monkeypatch.setattr(cv2, "CascadeClassifier", raise_cv2_error)
+
+    with pytest.raises(RuntimeError, match="test-cascade.xml"):
+        OpenCvHaarFaceDetector._load_cascade(cascade_path)
+
+    assert storage.release_calls == 1
 
 
 def test_undecodable_upload_is_rejected_before_face_checks() -> None:

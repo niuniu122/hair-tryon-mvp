@@ -1,5 +1,20 @@
 # 按任务
 
+## TASK-20260806-001
+
+- 2026-08-06T10:00:00+08:00 | CHANGE-20260806-003 | completed | 覆盖强化、中文项目烟测与 ship-ready 状态 | [文档](../changes/2026/08/CHANGE-20260806-003.md)
+- 2026-08-06T10:00:00+08:00 | QA-20260806-001 | completed | AC-PATH、63/63 与 85% 覆盖通过 | [文档](../../reviews/qa/QA-20260806-001.md)
+- 2026-08-06T10:00:00+08:00 | REVIEW-20260806-001 | completed | 代码审查无发现，覆盖门槛通过 | [文档](../../reviews/engineering/REVIEW-20260806-001.md)
+- 2026-08-06T10:00:00+08:00 | DEV-20260806-001 | completed | Unicode 安全加载、覆盖强化与 API 烟测 | [文档](../development/2026/08/DEV-20260806-001.md)
+- 2026-08-06T09:26:40+08:00 | ROUTING-20260806-001 | completed | 实施与验证路由完成 | [文档](../../reviews/engineering/ROUTING-20260806-001.md)
+- 2026-08-06T10:00:00+08:00 | TASK-20260806-001 | completed | 修复与覆盖强化完成，待 PR | [文档](../handoffs/TASK-20260806-001.md)
+- 2026-08-06T10:00:00+08:00 | PROGRESS-001 | ship_ready | 验证完成，待 ship | [文档](../../progress.md)
+- 2026-08-06T10:00:00+08:00 | IMPL-PLAN-001 | completed | 计划全部完成 | [文档](../../implementation-plan.md)
+- 2026-08-06T09:05:40+08:00 | CHANGE-20260806-002 | completed | PRD v1.5.1 开发批准 | [文档](../changes/2026/08/CHANGE-20260806-002.md)
+- 2026-08-06T09:05:40+08:00 | PRD-HAIR-IMAGE-001 | active | AC-PATH-01 至 AC-PATH-07 已批准 | [文档](../../product.md)
+- 2026-08-06T08:54:13+08:00 | CHANGE-20260806-001 | completed | 轻量 PRD 与等待批准状态同步 | [文档](../changes/2026/08/CHANGE-20260806-001.md)
+- 2026-08-06T08:54:13+08:00 | CONSULTATION-20260806-001 | completed | 根因与内存加载方案验证 | [文档](../../reviews/product/CONSULTATION-20260806-001.md)
+
 ## TASK-20260804-002
 
 - 2026-08-04T18:31:03+08:00 | CHANGE-20260804-006 | completed | 实现、评审与完成状态同步 | [文档](../changes/2026/08/CHANGE-20260804-006.md)

@@ -4,6 +4,7 @@ import hashlib
 import io
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
 from typing import Protocol
 
 import cv2
@@ -117,13 +118,39 @@ class OpenCvHaarFaceDetector:
     """Basic capture gate only; it is not an identity or hairstyle classifier."""
 
     def __init__(self) -> None:
-        cascade_root = cv2.data.haarcascades
-        self._front = cv2.CascadeClassifier(
-            cascade_root + "haarcascade_frontalface_default.xml"
+        cascade_root = Path(cv2.data.haarcascades)
+        self._front = self._load_cascade(
+            cascade_root / "haarcascade_frontalface_default.xml"
         )
-        self._profile = cv2.CascadeClassifier(
-            cascade_root + "haarcascade_profileface.xml"
+        self._profile = self._load_cascade(
+            cascade_root / "haarcascade_profileface.xml"
         )
+
+    @staticmethod
+    def _load_cascade(path: Path) -> cv2.CascadeClassifier:
+        error_message = f"Failed to load OpenCV Haar cascade: {path.name}"
+        try:
+            xml = path.read_text(encoding="utf-8")
+            storage = cv2.FileStorage(
+                xml,
+                cv2.FILE_STORAGE_READ | cv2.FILE_STORAGE_MEMORY,
+            )
+        except (OSError, UnicodeError, cv2.error, SystemError) as error:
+            raise RuntimeError(error_message) from error
+
+        try:
+            classifier = cv2.CascadeClassifier()
+            if (
+                not storage.isOpened()
+                or not classifier.read(storage.getFirstTopLevelNode())
+                or classifier.empty()
+            ):
+                raise RuntimeError(error_message)
+            return classifier
+        except cv2.error as error:
+            raise RuntimeError(error_message) from error
+        finally:
+            storage.release()
 
     def detect(self, image: np.ndarray) -> list[FaceObservation]:
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)

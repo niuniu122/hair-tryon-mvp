@@ -2,14 +2,14 @@
 doc_id: PROGRESS-001
 title: 开发进度
 category: progress
-status: completed
-version: 8
+status: active
+version: 12
 created_at: 2026-08-04T14:16:11+08:00
-updated_at: 2026-08-04T18:31:03+08:00
-last_verified_at: 2026-08-04T18:40:32+08:00
+updated_at: 2026-08-06T10:00:00+08:00
+last_verified_at: 2026-08-06T10:00:00+08:00
 source_of_truth: true
-related_tasks: [TASK-20260804-001, TASK-20260804-002]
-related_documents: [PRD-HAIR-IMAGE-001, CONSULTATION-20260804-003, ROUTING-20260804-003, REVIEW-20260804-002, QA-20260804-002, DEV-20260804-007, DEV-20260804-008, SECURITY-20260804-001]
+related_tasks: [TASK-20260804-001, TASK-20260804-002, TASK-20260806-001]
+related_documents: [PRD-HAIR-IMAGE-001, CONSULTATION-20260806-001, ROUTING-20260806-001, TASK-20260806-001, DEV-20260806-001, REVIEW-20260806-001, QA-20260806-001, CHANGE-20260806-003]
 supersedes: null
 actor_agent: root
 expert_role: project-shepherd
@@ -17,22 +17,32 @@ operation_type: update
 ---
 
 ```yaml
-workflow_phase: completed
+workflow_phase: ship_ready
 prd_status: approved
 development_authorized: true
-approved_scope: PRD v1.5.0 双预览前端呈现修订及未被该修订改变的 v1.4.1 范围
-approved_at: 2026-08-04T17:35:29+08:00
+approved_scope: PRD v1.5.1 Windows 中文路径下 OpenCV 分类器 Unicode 安全加载、初始化失败保护及测试/文档
+approved_at: 2026-08-06T09:05:40+08:00
 approval_evidence: 用户明确输入“批准 PRD，开始开发”
-current_task: null
-product_manager_agent: prd-metrics-pm
-prd_consulted_agents: [product-manager, frontend-developer]
-development_lead_agent: frontend-internal-ui
-development_support_agents: [ui-v15-code-review]
-agent_routing_record: docs/reviews/engineering/ROUTING-20260804-003.md
+current_task: TASK-20260806-001
+product_manager_agent: camera_path_bug_pm
+prd_consulted_agents: [product-manager, ai-engineer]
+development_lead_agent: minimal-change-engineer
+development_support_agents: [root-code-reviewer, root-api-tester]
+agent_routing_record: docs/reviews/engineering/ROUTING-20260806-001.md
 interrupted_development_task: null
 ```
 
 ## 当前状态
+
+- v1.5.0 仍是已完成、已验证的交付基线；下面的历史完成证据保持有效。
+- 新发现的 P0 缺陷：在 Windows 中文路径（已用 `AI美业` 复现）下，两个 OpenCV Haar 分类器均加载为空，真实检测触发 `!empty()` 并阻断采集。
+- 根因与内存加载方案已经只读验证；PRD v1.5.1 已获明确批准，进入 TDD 实施。
+- 批准范围仅为 Unicode 安全分类器加载、初始化失败保护和相应回归测试。
+- Minimal Change Engineer 已完成 TDD：旧实现的 3 个目标用例 RED，新实现 3/3 GREEN。
+- 覆盖审计后补齐侧面资源缺失、完整性短路、`cv2.error` 包装及失败释放断言；加载器路径覆盖率 85%，高于 80% 目标。
+- 独立完整验证：pytest 63/63、Node 20/20、JavaScript 语法、compileall、pip check 和 git diff check 通过。
+- Windows 真实中文项目副本从中文路径导入源码和级联 XML，并经真实 API 成功提交登记合成正面与有效右侧面，两次均返回 201。
+- gstack pre-landing review 无发现，范围检查 CLEAN；无未解决 blocker。
 
 - Nano Banana 2/Pro provider、模型选择与锁定、内部工作台、正侧并行/背面后置、一次重试、遥测和清理已经实现。
 - Codex imagegen 正面/右侧面合成输入已通过采集校验；两个真实 Nano Banana 模型均返回有效图片。
@@ -45,4 +55,4 @@ interrupted_development_task: null
 - 独立代码审查发现的结束迟到回调、旧重试快照和模型确认原子性问题均已修复并复核 RESOLVED，无未解决 blocker。
 - 最新验证：Node 20/20、pytest 55/55、JavaScript 语法、Edge 1440/720 布局、键盘页签、模型 PUT、结束 DELETE 与控制台 0 错误通过。
 
-下一条准确操作：在目标 Windows 工作站使用物理摄像头做一次正面/右侧面冻结烟测，并在已安装的 Chrome 上复验 200% 缩放；随后再开始正式 5 人×5 发型内部评估。这些是运行验证，不需要继续修改当前代码。
+下一条准确操作：提交并推送 `fix/unicode-cascade-path`，创建关联 GitHub #1 的 PR；不自动合并或部署。

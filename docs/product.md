@@ -3,13 +3,13 @@ doc_id: PRD-HAIR-IMAGE-001
 title: 内部团队男士发型三视图生成验证 MVP
 category: product-specification
 status: active
-version: 1.5.0
+version: 1.5.1
 created_at: 2026-08-04T09:44:50+08:00
-updated_at: 2026-08-04T18:31:03+08:00
-last_verified_at: 2026-08-04T18:40:32+08:00
+updated_at: 2026-08-06T09:05:40+08:00
+last_verified_at: 2026-08-06T09:05:40+08:00
 source_of_truth: true
-related_tasks: [TASK-20260804-001, TASK-20260804-002]
-related_documents: [CONSULTATION-20260804-002, CONSULTATION-20260804-003, CHANGE-20260804-002, CHANGE-20260804-003, CHANGE-20260804-005, CHANGE-20260804-006, TEST-ASSET-20260804-001]
+related_tasks: [TASK-20260804-001, TASK-20260804-002, TASK-20260806-001]
+related_documents: [CONSULTATION-20260804-002, CONSULTATION-20260804-003, CONSULTATION-20260806-001, ROUTING-20260806-001, CHANGE-20260806-001, CHANGE-20260806-002, TEST-ASSET-20260804-001]
 supersedes: PRD-HAIR-LUCY-001
 actor_agent: prd-metrics-pm
 expert_role: product-manager
@@ -18,13 +18,47 @@ operation_type: update
 
 # 内部团队男士发型三视图生成验证 MVP
 
-本文件是已批准 PRD v1.5.0 的项目内执行摘要。v1.4.1 的核心能力已经实现；v1.5.0 只修订前端信息架构。原始文件位于 `C:/Users/Administrator/.gstack/projects/project/Administrator-unknown-design-20260804-094450.md`。
+本文件包含已批准并完成的 PRD v1.5.0，以及已批准并进入开发的 v1.5.1 Windows 中文路径兼容性修订。原始文件位于 `C:/Users/Administrator/.gstack/projects/project/Administrator-unknown-design-20260804-094450.md`。
+
+## v1.5.1 Windows 中文路径兼容性修订（已批准）
+
+### 问题与用户价值
+
+项目安装在含中文的 Windows 路径时，OpenCV 通过文件名加载两个 Haar XML 均得到空分类器，随后人脸检测触发 `!empty()` 并阻断拍摄。修复后，内部团队无需迁移到英文目录，英文和中文路径均可完成现有采集流程。
+
+### 推荐方案
+
+由 Python 以 Unicode 安全方式读取 OpenCV 自带 XML，再通过 OpenCV `FileStorage` 内存模式和 `CascadeClassifier.read(FileNode)` 初始化分类器。初始化阶段必须检查文件读取、FileStorage 打开、分类器读取结果和 `empty()`，缺失或损坏时抛出稳定的应用级错误。
+
+### 验收标准
+
+- `AC-PATH-01`: 将正面和侧面 XML 放在 `AI美业` 子目录并初始化检测器时，两个分类器均为非空。
+- `AC-PATH-02`: 中文路径下对无脸 RGB 空白帧执行检测，返回空列表，不产生 OpenCV `!empty()` 或其他 `cv2.error`。
+- `AC-PATH-03`: 英文路径下的初始化和检测行为保持不变。
+- `AC-PATH-04`: 分类器文件缺失、不可读或损坏时，在检测前抛出稳定、可理解的应用级初始化错误。
+- `AC-PATH-05`: 不改变正面/侧面方向、质量阈值、公共 API、前端、模型 provider、依赖或数据结构。
+- `AC-PATH-06`: 现有后端 55 项和前端 20 项全部通过，并新增真实中文路径回归测试。
+- `AC-PATH-07`: `compileall` 通过；在真实中文项目路径的 Windows 工作站上至少提交一次采集，不出现分类器加载错误。
+
+### 非目标与回滚
+
+不更换人脸检测模型，不把 XML 复制到临时目录，不要求用户迁移项目，不绕过采集质量校验。回滚方式为撤销本次两个核心文件的提交；无数据库、依赖或数据迁移。
+
+### 开发授权
+
+- `workflow_phase`: `development`
+- `prd_status`: `approved`
+- `development_authorized`: `true`
+- `approved_scope`: Windows 中文路径下 OpenCV 分类器 Unicode 安全加载、初始化失败保护及测试/文档。
+- `approved_at`: `2026-08-06T09:05:40+08:00`
+- `approval_evidence`: 用户明确输入“批准 PRD，开始开发”。
 
 ## 批准状态
 
-- `workflow_phase`: `completed`
-- `prd_status`: `approved`
-- `development_authorized`: `true`
+- 以下状态仅指已完成的 v1.5.0 历史基线，不构成 v1.5.1 开发授权。
+- `workflow_phase`: `completed`（v1.5.0）
+- `prd_status`: `approved`（v1.5.0）
+- `development_authorized`: `true`（仅 v1.5.0 历史范围）
 - `approved_at`: `2026-08-04T17:35:29+08:00`
 - `approval_evidence`: 用户明确输入“批准 PRD，开始开发”。
 - `approved_scope`: PRD v1.5.0 双预览前端呈现修订及未被该修订改变的 v1.4.1 范围。
