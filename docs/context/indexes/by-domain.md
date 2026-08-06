@@ -1,13 +1,14 @@
 # 按领域
 
+- 2026-08-06T10:28:21+08:00 | CHANGE-20260806-004 | completed | delivery/github | Project Shepherd | 分支推送与 PR #2 创建完成 | [文档](../changes/2026/08/CHANGE-20260806-004.md)
+- 2026-08-06T10:28:21+08:00 | TASK-20260806-001 | completed | backend/windows-compatibility | Project Shepherd | PR #2 已创建，等待用户审阅 | [文档](../handoffs/TASK-20260806-001.md)
+- 2026-08-06T10:28:21+08:00 | PROGRESS-001 | completed | workflow | Project Shepherd | v1.5.1 GitHub PR 交付完成 | [文档](../../progress.md)
+- 2026-08-06T10:28:21+08:00 | IMPL-PLAN-001 | completed | backend/testing | Project Shepherd | 修复计划完成并创建 PR #2 | [文档](../../implementation-plan.md)
 - 2026-08-06T10:00:00+08:00 | CHANGE-20260806-003 | completed | documentation/workflow | Technical Writer | 覆盖强化与 ship-ready 状态同步 | [文档](../changes/2026/08/CHANGE-20260806-003.md)
 - 2026-08-06T10:00:00+08:00 | QA-20260806-001 | completed | backend/qa/windows | API Tester | 中文项目 API 采集验收与覆盖审计 | [文档](../../reviews/qa/QA-20260806-001.md)
 - 2026-08-06T10:00:00+08:00 | REVIEW-20260806-001 | completed | backend/engineering | Code Reviewer | 最小修复审查与覆盖门槛通过 | [文档](../../reviews/engineering/REVIEW-20260806-001.md)
 - 2026-08-06T10:00:00+08:00 | DEV-20260806-001 | completed | backend/opencv/windows | Minimal Change Engineer | Unicode 安全加载、覆盖强化与 API 烟测 | [文档](../development/2026/08/DEV-20260806-001.md)
 - 2026-08-06T09:26:40+08:00 | ROUTING-20260806-001 | completed | backend/reliability | Project Shepherd | 实施与验证路由完成 | [文档](../../reviews/engineering/ROUTING-20260806-001.md)
-- 2026-08-06T10:00:00+08:00 | TASK-20260806-001 | completed | backend/windows-compatibility | Project Shepherd | 分类器加载修复与覆盖强化完成 | [文档](../handoffs/TASK-20260806-001.md)
-- 2026-08-06T10:00:00+08:00 | PROGRESS-001 | ship_ready | workflow | Project Shepherd | v1.5.1 待 ship | [文档](../../progress.md)
-- 2026-08-06T10:00:00+08:00 | IMPL-PLAN-001 | completed | backend/testing | Project Shepherd | TDD、覆盖强化与回归完成 | [文档](../../implementation-plan.md)
 - 2026-08-06T09:05:40+08:00 | CHANGE-20260806-002 | completed | documentation/workflow | Technical Writer | PRD v1.5.1 开发批准 | [文档](../changes/2026/08/CHANGE-20260806-002.md)
 - 2026-08-06T09:05:40+08:00 | PRD-HAIR-IMAGE-001 | active | product/windows-compatibility | Product Manager | 中文路径修复已批准 | [文档](../../product.md)
 - 2026-08-06T08:54:13+08:00 | CHANGE-20260806-001 | completed | documentation/workflow | Technical Writer | 轻量 PRD 与等待批准状态同步 | [文档](../changes/2026/08/CHANGE-20260806-001.md)

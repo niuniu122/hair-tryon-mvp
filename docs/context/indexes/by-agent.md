@@ -1,13 +1,14 @@
 # 按 Agent
 
+- 2026-08-06T10:28:21+08:00 | root / Project Shepherd | CHANGE-20260806-004 | completed | 分支推送与 GitHub PR #2 交付完成 | [文档](../changes/2026/08/CHANGE-20260806-004.md)
+- 2026-08-06T10:28:21+08:00 | root / Project Shepherd | TASK-20260806-001 | completed | PR #2 已创建，等待用户审阅 | [文档](../handoffs/TASK-20260806-001.md)
+- 2026-08-06T10:28:21+08:00 | root / Project Shepherd | PROGRESS-001 | completed | v1.5.1 GitHub PR 交付完成 | [文档](../../progress.md)
+- 2026-08-06T10:28:21+08:00 | root / Project Shepherd | IMPL-PLAN-001 | completed | 修复计划完成并创建 PR #2 | [文档](../../implementation-plan.md)
 - 2026-08-06T10:00:00+08:00 | root / Technical Writer | CHANGE-20260806-003 | completed | 覆盖强化、中文项目烟测与 ship-ready 状态 | [文档](../changes/2026/08/CHANGE-20260806-003.md)
 - 2026-08-06T10:00:00+08:00 | root / API Tester | QA-20260806-001 | completed | 中文项目 API 采集验收与覆盖审计 | [文档](../../reviews/qa/QA-20260806-001.md)
 - 2026-08-06T10:00:00+08:00 | root / Code Reviewer | REVIEW-20260806-001 | completed | Pre-Landing Review 无发现，覆盖门槛通过 | [文档](../../reviews/engineering/REVIEW-20260806-001.md)
 - 2026-08-06T10:00:00+08:00 | unicode_cascade_fix / Minimal Change Engineer | DEV-20260806-001 | completed | Unicode 安全加载、覆盖强化与 API 烟测 | [文档](../development/2026/08/DEV-20260806-001.md)
 - 2026-08-06T09:26:40+08:00 | root / Project Shepherd | ROUTING-20260806-001 | completed | 实施与验证路由完成 | [文档](../../reviews/engineering/ROUTING-20260806-001.md)
-- 2026-08-06T10:00:00+08:00 | root / Project Shepherd | TASK-20260806-001 | completed | 中文路径分类器修复与覆盖强化完成 | [文档](../handoffs/TASK-20260806-001.md)
-- 2026-08-06T10:00:00+08:00 | root / Project Shepherd | PROGRESS-001 | ship_ready | v1.5.1 待 ship | [文档](../../progress.md)
-- 2026-08-06T10:00:00+08:00 | root / Project Shepherd | IMPL-PLAN-001 | completed | 中文路径修复计划完成 | [文档](../../implementation-plan.md)
 - 2026-08-06T09:05:40+08:00 | root / Technical Writer | CHANGE-20260806-002 | completed | PRD v1.5.1 开发批准 | [文档](../changes/2026/08/CHANGE-20260806-002.md)
 - 2026-08-06T09:05:40+08:00 | camera_path_bug_pm / Product Manager | PRD-HAIR-IMAGE-001 | active | v1.5.1 已批准 | [文档](../../product.md)
 - 2026-08-06T08:54:13+08:00 | root / Technical Writer | CHANGE-20260806-001 | completed | 轻量 PRD 与等待批准状态同步 | [文档](../changes/2026/08/CHANGE-20260806-001.md)

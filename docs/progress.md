@@ -2,14 +2,14 @@
 doc_id: PROGRESS-001
 title: 开发进度
 category: progress
-status: active
-version: 12
+status: completed
+version: 13
 created_at: 2026-08-04T14:16:11+08:00
-updated_at: 2026-08-06T10:00:00+08:00
-last_verified_at: 2026-08-06T10:00:00+08:00
+updated_at: 2026-08-06T10:28:21+08:00
+last_verified_at: 2026-08-06T10:28:21+08:00
 source_of_truth: true
 related_tasks: [TASK-20260804-001, TASK-20260804-002, TASK-20260806-001]
-related_documents: [PRD-HAIR-IMAGE-001, CONSULTATION-20260806-001, ROUTING-20260806-001, TASK-20260806-001, DEV-20260806-001, REVIEW-20260806-001, QA-20260806-001, CHANGE-20260806-003]
+related_documents: [PRD-HAIR-IMAGE-001, CONSULTATION-20260806-001, ROUTING-20260806-001, TASK-20260806-001, DEV-20260806-001, REVIEW-20260806-001, QA-20260806-001, CHANGE-20260806-003, CHANGE-20260806-004, GITHUB-PR-2]
 supersedes: null
 actor_agent: root
 expert_role: project-shepherd
@@ -17,13 +17,13 @@ operation_type: update
 ---
 
 ```yaml
-workflow_phase: ship_ready
+workflow_phase: completed
 prd_status: approved
 development_authorized: true
 approved_scope: PRD v1.5.1 Windows 中文路径下 OpenCV 分类器 Unicode 安全加载、初始化失败保护及测试/文档
 approved_at: 2026-08-06T09:05:40+08:00
 approval_evidence: 用户明确输入“批准 PRD，开始开发”
-current_task: TASK-20260806-001
+current_task: null
 product_manager_agent: camera_path_bug_pm
 prd_consulted_agents: [product-manager, ai-engineer]
 development_lead_agent: minimal-change-engineer
@@ -55,4 +55,4 @@ interrupted_development_task: null
 - 独立代码审查发现的结束迟到回调、旧重试快照和模型确认原子性问题均已修复并复核 RESOLVED，无未解决 blocker。
 - 最新验证：Node 20/20、pytest 55/55、JavaScript 语法、Edge 1440/720 布局、键盘页签、模型 PUT、结束 DELETE 与控制台 0 错误通过。
 
-下一条准确操作：提交并推送 `fix/unicode-cascade-path`，创建关联 GitHub #1 的 PR；不自动合并或部署。
+交付结果：[GitHub PR #2](https://github.com/niuniu122/hair-tryon-mvp/pull/2) 已创建并关联 Issue #1。当前没有活动开发任务；下一步由用户审阅 PR，合并或部署需另行明确授权。

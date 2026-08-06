@@ -2,13 +2,14 @@
 
 ## 2026-08-06
 
+- 10:28:21 | CHANGE-20260806-004 | completed | 分支推送与 GitHub PR #2 交付完成 | [文档](../changes/2026/08/CHANGE-20260806-004.md)
+- 10:28:21 | TASK-20260806-001 | completed | PR #2 已创建，等待用户审阅 | [文档](../handoffs/TASK-20260806-001.md)
+- 10:28:21 | PROGRESS-001 | completed | v1.5.1 GitHub PR 交付完成 | [文档](../../progress.md)
+- 10:28:21 | IMPL-PLAN-001 | completed | 修复计划完成并创建 PR #2 | [文档](../../implementation-plan.md)
 - 10:00:00 | CHANGE-20260806-003 | completed | 覆盖强化、中文项目烟测与 ship-ready 状态 | [文档](../changes/2026/08/CHANGE-20260806-003.md)
 - 10:00:00 | QA-20260806-001 | completed | AC-PATH、63/63 与 85% 覆盖通过 | [文档](../../reviews/qa/QA-20260806-001.md)
 - 10:00:00 | REVIEW-20260806-001 | completed | 代码审查无发现，覆盖门槛通过 | [文档](../../reviews/engineering/REVIEW-20260806-001.md)
 - 10:00:00 | DEV-20260806-001 | completed | Unicode 安全加载、覆盖强化与 API 烟测 | [文档](../development/2026/08/DEV-20260806-001.md)
-- 10:00:00 | TASK-20260806-001 | completed | 中文路径分类器修复与覆盖强化完成 | [文档](../handoffs/TASK-20260806-001.md)
-- 10:00:00 | PROGRESS-001 | ship_ready | 验证完成，待 ship | [文档](../../progress.md)
-- 10:00:00 | IMPL-PLAN-001 | completed | TDD、覆盖强化与验证计划完成 | [文档](../../implementation-plan.md)
 - 09:26:40 | ROUTING-20260806-001 | completed | 实施与验证路由完成 | [文档](../../reviews/engineering/ROUTING-20260806-001.md)
 - 09:05:40 | CHANGE-20260806-002 | completed | PRD v1.5.1 开发批准 | [文档](../changes/2026/08/CHANGE-20260806-002.md)
 - 09:05:40 | PRD-HAIR-IMAGE-001 | active | v1.5.1 已批准 | [文档](../../product.md)
